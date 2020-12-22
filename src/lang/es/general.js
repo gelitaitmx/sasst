@@ -16,6 +16,7 @@ export const general = {
     copiarPortapapeles: "Copiar al portapapeles",
     correcto: "Correcto",
     de: "de",
+    descargar: "Descargar",
     descripcion: "Descripción",
     desconocido: "Desconocido",
     desbloquear: "Desbloquear",

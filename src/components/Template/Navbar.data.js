@@ -1,5 +1,5 @@
 import {trans} from "../../services/lang.service";
-import {FaList, FaWrench} from "react-icons/all";
+import {FaList, FaWrench, FaGripVertical, FaFileAlt, FaHammer, FaFire} from "react-icons/all";
 import {can} from "../../services/seguridad.service";
 
 /**
@@ -27,7 +27,18 @@ export const ITEMS_IZQUIERDA = {
             visible: true,
             tipo: 'dropdown',
             navlinks: [
-                {keyLang: 'navbar.control', to: "/admin/control",'icono': FaList , visible :true},
+                {keyLang: 'navbar.control', to: "/admin/control", 'icono': FaList, visible: true},
+            ]
+        },
+        {
+            keyLang: 'navbar.analisisRiesgo',
+            icono: FaGripVertical,
+            visible: true,
+            tipo: 'dropdown',
+            navlinks: [
+                {keyLang: 'navbar.documentos', to: "/documentos", 'icono': FaFileAlt, visible: true},
+                {keyLang: 'navbar.ara', to: "/aras", 'icono': FaHammer, visible: true},
+                {keyLang: 'navbar.simulacros', to: "/documentos/simulacros", 'icono': FaFire, visible: true},
             ]
         }
     ]
