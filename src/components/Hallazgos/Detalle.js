@@ -6,7 +6,7 @@ import {FaEdit, FaSave} from "react-icons/all";
 import {can} from "../../services/seguridad.service";
 
 import {
-    CLAVEDEPARTAMENTO, CLAVEDESCRIPCION,
+    CLAVEDEPARTAMENTO, CLAVEDESCRIPCION, CLAVEINICIO,
     CLAVELUGAR,
     CLAVEREPORTADO, CLAVERIESGO,
     CLAVERUBRO,
@@ -35,6 +35,10 @@ const Detalle = ({hallazgo, actualizaEditable, onClick}) => {
                     <div className="pr-2"><strong>{trans("hallazgo.fecha")} : </strong></div>
                     <div>{moment(hallazgo.fecha).format('DD/MM/yyyy HH:mm')}</div>
                 </div>
+                {can('hallazgo.editar_reporto') &&
+                <button className="btn btn-sm btn-outline-success" onClick={e => actualizaEditable(CLAVEINICIO)}>
+                    <FaEdit/></button>
+                }
             </div>
             {hallazgo.es_trabajador ?
                 <div className="d-flex justify-content-between">
@@ -86,7 +90,12 @@ const Detalle = ({hallazgo, actualizaEditable, onClick}) => {
             <div className="d-flex justify-content-between">
                 <div className="d-flex justify-content-start">
                     <div className="pr-2"><strong>{trans("hallazgo.tipoActo")} : </strong></div>
-                    <div>{(hallazgo.tipo_acto || {}).nombre}</div>
+                    {
+                        hallazgo.tipo &&
+                        <div>
+                            {trans(`hallazgo.${hallazgo.tipo}`)}
+                        </div>
+                    }
                 </div>
                 {
                     ((hallazgo.tipo_acto || {}).id || hallazgo.id)&&
@@ -145,12 +154,12 @@ const Detalle = ({hallazgo, actualizaEditable, onClick}) => {
                 </div>
             </div>
             <div>
-                {/*{*/}
-                {/*    can('guardar_hallazgo') &&*/}
-                <button className="btn btn-outline-success w-100" onClick={e => onClick()}>
+
+                {   can('hallazgo.guardar_hallazgo') &&
+                <button className="btn btn-outline-success w-100" onClick={e => onClick(hallazgo)}>
                     <FaSave/> {trans('general.guardar')}
                 </button>
-                {/*}*/}
+                }
             </div>
         </div>
     </div>
