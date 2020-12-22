@@ -1,0 +1,53 @@
+{
+  "name": "sasst",
+  "displayName": "Sasst",
+  "version": "0.1.0",
+  "private": true,
+  "dependencies": {
+    "@testing-library/jest-dom": "^4.2.4",
+    "@testing-library/react": "^9.5.0",
+    "@testing-library/user-event": "^7.2.1",
+    "axios": "^0.20.0",
+    "bootstrap": "^4.5.2",
+    "immer": "^7.0.9",
+    "jquery": "^3.5.1",
+    "moment": "^2.29.0",
+    "popper": "^1.0.1",
+    "react": "^16.13.1",
+    "react-bootstrap-typeahead": "^5.1.1",
+    "react-datepicker": "^3.2.2",
+    "react-dom": "^16.13.1",
+    "react-dropzone": "^11.2.0",
+    "react-icons": "^3.11.0",
+    "react-router-dom": "^5.2.0",
+    "react-scripts": "^2.1.8",
+    "react-textarea-autosize": "^8.2.0",
+    "react-tippy": "^1.4.0",
+    "reactn": "^2.2.7",
+    "sweetalert2": "^10.3.1"
+  },
+  "scripts": {
+    "start": "react-scripts start",
+    "build": "react-scripts build",
+    "test": "react-scripts test",
+    "eject": "react-scripts eject",
+    "build:prod": "env-cmd -f .env.production react-scripts build",
+    "build:qa": "env-cmd -f .env.qa react-scripts build"
+  },
+  "eslintConfig": {
+    "extends": "react-app"
+  },
+  "browserslist": {
+    "production": [
+      ">0.2%",
+      "not dead",
+      "not op_mini all"
+    ],
+    "development": [
+      "last 1 chrome version",
+      "last 1 firefox version",
+      "last 1 safari version"
+    ]
+  },
+  "homepage": "https://10.52.72.4/sasst"
+}

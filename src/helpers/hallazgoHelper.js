@@ -1,0 +1,11 @@
+export const  CLAVETRABAJADOR= 'TRA';
+export const  CLAVECONTRATISTA= 'CON';
+export const  CLAVEREPORTADO = 'REP';
+export const  CLAVERIESGO = 'NRI';
+export const  CLAVERUBRO = 'RUB';
+export const  CLAVELUGAR = 'LUG';
+export const  CLAVETIPOAPLICA = 'APL';
+export const  CLAVEINICIO = 'INI';
+export const  CLAVEDESCRIPCION = 'DES';
+export const  CLAVEDEPARTAMENTO = 'DEP';
+export const  CLAVETIPOACTO = 'TAC';
