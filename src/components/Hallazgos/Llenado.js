@@ -166,7 +166,7 @@ const Llenado = ({hallazgo, actualizarHallazgo, cats, trabajadores_activos, actu
         {
             editable == CLAVERIESGO &&
             <div className="d-flex flex-column">
-                <span>{trans("hallazgo.nivelRiego")}</span>
+                <span>{trans("hallazgo.nivelRiesgo")}</span>
                 <div className="d-flex justify-content-between">
                     <Select
                         onSelect={e => actualizarHallazgo('probabilidad', e, CLAVERIESGO)}

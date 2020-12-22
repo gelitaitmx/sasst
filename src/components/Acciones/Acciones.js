@@ -7,13 +7,18 @@ import produce from "immer";
 import {FaSave} from "react-icons/all";
 import {guardarAccion} from "../../api/hallazgoApi";
 
-const Acciones = ({acciones, guardarAccionCorrectiva}) => {
+const Acciones = ({acciones, guardarAccionCorrectiva , edicion = false}) => {
     return <div>
         {
-            (acciones || []).map((accion, id) =>
-                <Accion key={id} accion={accion}/>
-            )
+            edicion &&  <div>
+                {
+                    (acciones || []).map((accion, id) =>
+                        <Accion key={id} accion={accion}/>
+                    )
+                }
+            </div>
         }
+
         {
             acciones.length > 0 &&
             <hr/>

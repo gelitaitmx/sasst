@@ -181,7 +181,7 @@ const Control = () => {
                             <th>{trans("hallazgo.reportado")}</th>
                             <th>{trans("hallazgo.descripcion")}</th>
                             <th>{trans("hallazgo.departamento")}</th>
-                            <th>{trans("hallazgo.nivelRiego")}</th>
+                            <th>{trans("hallazgo.nivelRiesgo")}</th>
                             <th>{trans("hallazgo.acciones")}</th>
                         </tr>
                         {

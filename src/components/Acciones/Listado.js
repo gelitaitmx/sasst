@@ -9,7 +9,7 @@ import {getAllHallazgos, guardarAccion} from "../../api/hallazgoApi";
 import {FaExclamationTriangle, FaFileAlt, FaPlus, FaSearch, FaUserTie, FaWrench} from "react-icons/all";
 import TooltipHover from "../Template/TooltipHover";
 import {getCatalogos, getTrabajadoresActivos, getTrabajadorPorId} from "../../api/catalogosApi";
-import ModalAcciones from "../Acciones/ModalAcciones";
+import ModalAcciones from "./ModalAcciones";
 import $ from 'jquery';
 import {getClaim} from "../../helpers/authHelper";
 import {can} from "../../services/seguridad.service";
@@ -65,7 +65,7 @@ const Listado = () => {
     }, []);
 
     const consultarhallazgos = (departamento_id = null) => {
-        getAllHallazgos({fechas: fechas , 'departamento_id': departamento_id}, ['rubro', 'tipo_aplica', 'departamento', 'contratista_reportado', 'trabajador_reportado', 'lugar', 'acciones_correctivas']).then(res => {
+        getAllHallazgos({fechas: fechas , 'departamento_id': departamento_id}, ['rubro', 'nivel_riesgo', 'departamento', 'contratista_reportado', 'trabajador_reportado', 'lugar', 'acciones_correctivas']).then(res => {
             setHallazgos(res);
             setHallazgosAll(res);
         })
@@ -165,9 +165,6 @@ const Listado = () => {
                                 onClick={e => abrirRegistro()}>
                             <FaExclamationTriangle/><span>{trans("general.reportarHallazgo")}</span></button>
                     </div>
-                    <button className="btn btn-sm btn-outline-primary"
-                            onClick={e => setMostrarBuscadores(!mostrarBuscador)}>
-                        <FaSearch/></button>
                 </div>
             </div>
             <div className="d-flex justify-content-center p-2">
@@ -178,43 +175,13 @@ const Listado = () => {
                             <th>{trans('hallazgo.fecha')}</th>
                             <th>{trans('hallazgo.lugar')}</th>
                             <th>{trans('hallazgo.reportado')}</th>
+                            <th>{trans('hallazgo.responsable')}</th>
                             <th>{trans('hallazgo.descripcion')}</th>
-                            <th>{trans('hallazgo.toC')}</th>
-                            <th>{trans('hallazgo.tipoActo')}</th>
-                            <th>{trans('hallazgo.aplica')}</th>
-                            <th>{trans('hallazgo.rubro')}</th>
                             <th>{trans('hallazgo.departamento')}</th>
+                            <th>{trans('hallazgo.accionesCorrectivas')}</th>
+                            <th>{trans('hallazgo.nivelRiesgo')}</th>
+                            <th>{trans('hallazgo.acciones')}</th>
                         </tr>
-                        {
-                            mostrarBuscador &&
-                            <tr className="p-2">
-                                <td></td>
-                                <td><input className="form-control-sm w-100"
-                                           onChange={e => actualizaBuscador('lugar', e.target.value)}/></td>
-                                <td><input className="form-control-sm w-100"
-                                           onChange={e => actualizaBuscador('reportado', e.target.value)}/></td>
-                                <td><input className="form-control-sm w-100"
-                                           onChange={e => actualizaBuscador('descripcion', e.target.value)}/></td>
-                                <td className="d-flex justify-content-start flex-nowrap">
-                                    <button className="btn btn-sm btn-outline-primary"
-                                            onClick={e => actualizaBuscador('trabajador_reportado_id', null)}>
-                                        <FaUserTie/>
-                                    </button>
-                                    <button className="btn btn-sm btn-outline-secondary"
-                                            onClick={e => actualizaBuscador('contratista_reportado_id', null)}>
-                                        <FaWrench/>
-                                    </button>
-                                </td>
-                                <td><input className="form-control-sm w-100"
-                                           onChange={e => actualizaBuscador('tipo', e.target.value)}/></td>
-                                <td><input className="form-control-sm w-100"
-                                           onChange={e => actualizaBuscador('tipo_aplica', e.target.value)}/></td>
-                                <td><input className="form-control-sm w-100"
-                                           onChange={e => actualizaBuscador('rubro', e.target.value)}/></td>
-                                <td><input className="form-control-sm w-100"
-                                           onChange={e => actualizaBuscador('departamento', e.target.value)}/></td>
-                            </tr>
-                        }
 
                         </thead>
                         <tbody className="text-small cursor">
@@ -232,22 +199,23 @@ const Listado = () => {
                                                 {(hallazgo.contratista_reportado || {}).nombre}
                                             </span>
                                     }</td>
+                                    <td>{(hallazgo.responsable || {}).fullName}</td>
                                     <td>{hallazgo.descripcion}</td>
-                                    <td>{
-                                        (hallazgo.trabajador_reportado_id) ?
-                                            <span>
-                                                <TooltipHover
-                                                    texto={trans('hallazgo.empleado')}>  <FaUserTie/></TooltipHover>
-                                            </span> :
-                                            <span>
-                                                <TooltipHover
-                                                    texto={trans('hallazgo.contratista')}> <FaWrench/></TooltipHover>
-                                            </span>
-                                    }</td>
-                                    <td>{trans(`hallazgo.${hallazgo.tipo}`)}</td>
-                                    <td>{(hallazgo.tipo_aplica || {}).nombre}</td>
-                                    <td>{(hallazgo.rubro || {}).nombre}</td>
                                     <td>{(hallazgo.departamento || {}).nombre}</td>
+                                    <td>
+
+                                    </td>
+                                    <td>  <div className="p-2 rounded d-flex flex-nowrap  text-nowrap"
+                                               style={{"background": ((hallazgo || {}).nivel_riesgo || {}).color}}>
+                                        {((hallazgo || {}).nivel_riesgo || {}).nombre}
+                                    </div></td>
+                                    <td>
+                                        <button className="btn btn-sm btn-outline-secondary"
+                                                onClick={e => abrirAcciones(hallazgo)}>
+                                                    <FaPlus></FaPlus>
+                                            </button>
+
+                                    </td>
                                 </tr>
                             )
                         }

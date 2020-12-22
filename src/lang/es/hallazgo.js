@@ -1,5 +1,6 @@
 export const hallazgo = {
     acciones : 'Acciones',
+    accionesCorrectivas : 'Acciones Correctivas',
     AQuienReporta : '¿A quien se va a reportar?',
     contratista : 'Contratista',
     detalle : 'Detalle del Hallazgo',
@@ -28,7 +29,7 @@ export const hallazgo = {
     toC : "ToC",
     rubro : "Rubro",
     aplica : "Aplica a" ,
-    nivelRiego:'Nivel de Riesgo',
+    nivelRiesgo:'Nivel de Riesgo',
 
 
     AI : 'Acto Inseguro',

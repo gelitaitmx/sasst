@@ -142,7 +142,7 @@ const Detalle = ({hallazgo, actualizaEditable, onClick}) => {
             </div>
             <div className="d-flex justify-content-between">
                 <div className="d-flex justify-content-start">
-                    <div className="d-flex pr-2 flex-nowrap"><strong>{trans("hallazgo.nivelRiego")} : </strong></div>
+                    <div className="d-flex pr-2 flex-nowrap"><strong>{trans("hallazgo.nivelRiesgo")} : </strong></div>
                     <div className="p-2 rounded" style={{'background' :((hallazgo || {}).nivel_riesgo|| {}).color}}>    {((hallazgo || {}).nivel_riesgo|| {}).nombre}</div>
                 </div>
                 <div>

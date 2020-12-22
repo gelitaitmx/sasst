@@ -20,6 +20,12 @@ export const ITEMS_IZQUIERDA = {
             visible: true,
             tipo: 'navlink',
             nlOptions: {to: '/hallazgo/Listado'}
+        }, {
+            keyLang: 'navbar.acciones',
+            icono: FaList,
+            visible: true,
+            tipo: 'navlink',
+            nlOptions: {to: '/acciones/Listado'}
         },
         {
             keyLang: 'navbar.admin',
