@@ -14,19 +14,19 @@ import DatePicker from "react-datepicker";
 import Select from "../Template/Select";
 
 
-const Llenado = ({hallazgo, actualizarHallazgo, cats,trabajadores_activos ,actualizaEditable, editable}) =>{
-    return  <div className="card border-primary p-2 text-center">
+const Llenado = ({hallazgo, actualizarHallazgo, cats, trabajadores_activos, actualizaEditable, editable}) => {
+    return <div className="card border-primary p-2 text-center">
         {
             editable == CLAVEINICIO &&
             <div>
                 <div className="d-flex flex-column">
                     <span>{trans("hallazgo.reporta")}</span>
                     {
-                        can('editar_reporto') ?
+                        can('hallazgo.editar_reporto') ?
                             <Typeahead id='trabajador_reportado' style={{width: '100%'}}
                                        filterBy={['fullName']}
                                        labelKey="fullName"
-                                       onChange={(reporto) => actualizarHallazgo('trabajador_reportado', reporto[0], CLAVEINICIO)}
+                                       onChange={(reporto) => actualizarHallazgo('reporto', reporto[0], CLAVEINICIO)}
                                        options={trabajadores_activos}
                                        selected={hallazgo.reporto ? [hallazgo.reporto] : []}/> :
                             <span>
@@ -179,8 +179,8 @@ const Llenado = ({hallazgo, actualizarHallazgo, cats,trabajadores_activos ,actua
 
 
                 </div>
-                <div className="p-2 rounded" style={{'background' :((hallazgo || {}).nivel_riesgo|| {}).color}}>
-                    {((hallazgo || {}).nivel_riesgo|| {}).nombre}
+                <div className="p-2 rounded" style={{'background': ((hallazgo || {}).nivel_riesgo || {}).color}}>
+                    {((hallazgo || {}).nivel_riesgo || {}).nombre}
                 </div>
             </div>
         }

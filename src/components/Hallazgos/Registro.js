@@ -69,17 +69,14 @@ const Registro = () => {
     }
     //----------------useEffect------------//
     useEffect(() => {
-        console.log('consultando catalogos');
         cargarCatalogos();
     }, []);
 
     useEffect(() => {
         if ((hallazgo.consecuencia || {}).id != null && (hallazgo.probabilidad || {}).id != null) {
             let niv = cats.formulas_nivel_riesgo.filter(nr => nr.consecuencia_id === hallazgo.consecuencia.id && nr.probabilidad_id === hallazgo.probabilidad.id);
-            console.log(niv[0].nivel_riesgo);
             actualizarHallazgo('nivel_riesgo', niv[0].nivel_riesgo,CLAVERIESGO );
         }
-
     }, [hallazgo.consecuencia, hallazgo.probabilidad]);
 
     //------------------Operaciones---------//

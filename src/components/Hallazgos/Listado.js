@@ -8,9 +8,11 @@ import produce from "immer";
 import {getAllHallazgos, guardarAccion} from "../../api/hallazgoApi";
 import {FaExclamationTriangle, FaFileAlt, FaPlus, FaSearch, FaUserTie, FaWrench} from "react-icons/all";
 import TooltipHover from "../Template/TooltipHover";
-import {getCatalogos, getTrabajadoresActivos} from "../../api/catalogosApi";
+import {getCatalogos, getTrabajadoresActivos, getTrabajadorPorId} from "../../api/catalogosApi";
 import ModalAcciones from "./ModalAcciones";
 import $ from 'jquery';
+import {getClaim} from "../../helpers/authHelper";
+import {can} from "../../services/seguridad.service";
 
 const Listado = () => {
     const [control, setControl] = useGlobal('control');
@@ -41,24 +43,29 @@ const Listado = () => {
     };
 
     useEffect(() => {
-        consultarhallazgos();
-    }, [fechas]);
+        if(can('hallazgo.ver_todos_hallazgos')){
+            consultarhallazgos();
+        }else{
+            getTrabajadorPorId(getClaim('tId'),['rels_trabajador_departamento']).then( res => {
+                console.log(res.rels_trabajador_departamento[0].departamento_id);
+                consultarhallazgos(res.rels_trabajador_departamento[0].departamento_id);
+            });
+        }
+
+    }, [fechas, control.permisos]);
 
     useEffect(() => {
         if (hallazgo_select.id != null){
-            $("#ModalEdit").modal('show');
-        }else{
-            $("#ModalEdit").modal('hide');
+            $("#ModalAcciones").modal('show');
         }
-
     }, [hallazgo_select.id]);
 
     useEffect(() => {
         cargarCatalogos();
     }, []);
 
-    const consultarhallazgos = () => {
-        getAllHallazgos(fechas, ['rubro', 'tipo_aplica', 'departamento', 'contratista_reportado', 'trabajador_reportado', 'lugar', 'acciones_correctivas']).then(res => {
+    const consultarhallazgos = (departamento_id = null) => {
+        getAllHallazgos({fechas: fechas , 'departamento_id': departamento_id}, ['rubro', 'tipo_aplica', 'departamento', 'contratista_reportado', 'trabajador_reportado', 'lugar', 'acciones_correctivas']).then(res => {
             setHallazgos(res);
             setHallazgosAll(res);
         })
@@ -87,7 +94,8 @@ const Listado = () => {
             setTrabajadoresActivos(res);
         })
 
-    }
+
+    };
 
     const actualizarFechas = (propiedad, valor) => {
         setFechas(produce(draft => {
@@ -100,7 +108,6 @@ const Listado = () => {
     };
 
     const actualizaBuscador = (propiedad, valor) => {
-        console.log(valor);
         let filter = hallazgos.filter(hallazgo => {
             if (propiedad === 'contratista_reportado_id' || propiedad === 'trabajador_reportado_id') {
                 return hallazgo[propiedad] != null;
@@ -123,7 +130,7 @@ const Listado = () => {
 
     const guardarAccionCorrectiva = (accion) => {
         guardarAccion(accion, hallazgo_select.id).then(res => {
-            setHallazgoSelect({});
+            $("#ModalAcciones").modal("toggle");
             consultarhallazgos();
         })
     };
@@ -152,6 +159,7 @@ const Listado = () => {
                             className={`form-control w-100`}
                             onChange={(e) => actualizarFechas('fin', e)}/>
                     </div>
+
                     <div className="pr-2">
                         <button className="btn btn-outline-danger"
                                 onClick={e => abrirRegistro()}>

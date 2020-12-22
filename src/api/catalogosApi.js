@@ -76,3 +76,20 @@ export const guardarGenerico = (catalogo,datos) => {
             }
         });
 };
+
+
+export const getTrabajadorPorId = (id, relaciones , msg_cargando = false) => {
+    if (msg_cargando)
+        cargando();
+    return API.post('catalogos/getTrabajador', { 'trabajador_id': id , 'relaciones':relaciones})
+        .then(
+            (res) => {
+                cerrarAlert();
+                return res.data;
+            }
+        ).catch((error) => {
+            if (isLogged())
+                ocultableDanger(trans('general.errorAlCargar'), trans('general.error'));
+            throw (error);
+        });
+};

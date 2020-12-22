@@ -22,6 +22,7 @@ export const hallazgo = {
     trabajadorReportado : "Trabajador Reportado",
     contratistaReportado : "Contratista Reportado",
     departamentoInvolucrado : "Departamento Involucrado",
+    seleccionaResponsable : "Seleccione el responsable ",
     lugar : "Lugar",
     tipoActo : "Tipo de Acto",
     toC : "ToC",

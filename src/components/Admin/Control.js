@@ -5,15 +5,18 @@ import {trans} from "../../services/lang.service";
 import moment from "moment";
 import DatePicker from "react-datepicker";
 import produce from "immer";
-import {getAllHallazgos, guardarAccion} from "../../api/hallazgoApi";
+import {getAllHallazgos, guardarAccion, guardarHallazgo, quitarValidacion, validaHallazgo} from "../../api/hallazgoApi";
 import {FaSearch, FaUserTie, FaEdit, FaCheckCircle, FaTimesCircle} from "react-icons/all";
 import TooltipHover from "../Template/TooltipHover";
 import {getCatalogos, getTrabajadoresActivos} from "../../api/catalogosApi";
 import $ from "jquery";
 import ModalEdit from "./ModalEdit";
+import ModalResponsableHallazgo from "./ModalResponsableHallazgo";
+import {confirmar, staticInfo} from "../../helpers/swalHelper";
 
 const Control = () => {
     const [control, setControl] = useGlobal("control");
+    const [nombre_modal, setNombreModal] = useState("");
     const [fechas, setFechas] = useState({
         inicio: moment().startOf("month").toDate(),
         fin: moment().endOf("month").toDate()
@@ -44,17 +47,14 @@ const Control = () => {
     }, []);
 
     useEffect(() => {
-        console.log(hallazgo_select);
-        if (hallazgo_select.id != null){
-            $("#ModalEdit").modal("show");
-        }else{
-            $("#ModalEdit").modal("hide");
+        console.log(nombre_modal);
+        if (hallazgo_select.id != null) {
+            $(nombre_modal).modal("show");
         }
-
     }, [hallazgo_select.id]);
 
     const consultarhallazgos = () => {
-        getAllHallazgos(fechas, ["rubro", "tipo_aplica", "departamento", "contratista_reportado", "trabajador_reportado", "lugar", "acciones_correctivas", "nivel_riesgo"]).then(res => {
+        getAllHallazgos({fechas: fechas}, ["rubro", "reporto", "tipo_aplica", "departamento", "contratista_reportado", "trabajador_reportado", "lugar", "acciones_correctivas", "nivel_riesgo", 'consecuencia', 'probabilidad']).then(res => {
             setHallazgos(res);
             setHallazgosAll(res);
         })
@@ -66,13 +66,24 @@ const Control = () => {
             {nombre: "lugar", relaciones: []},
             {nombre: "tipo_aplica", relaciones: []},
             {nombre: "rubro", relaciones: []},
-            {nombre: "departamento", relaciones: []}
+            {nombre: "departamento", relaciones: []},
+            {nombre: 'probabilidad', relaciones: []},
+            {nombre: 'consecuencia', relaciones: []},
+            {nombre: 'formula_nivel_riesgo', relaciones: ['nivel_riesgo']},
         ]).then(res => {
             setCats({
                 contratistas: res.contratista.data,
                 lugares: res.lugar.data,
                 rubros: res.rubro.data,
+                tipos_aplica: res.tipo_aplica.data,
+                tipos_acto: [{'id': 'AI', nombre: 'Acto Inseguro'},
+                    {'id': 'AC', nombre: 'Accidente'},
+                    {'id': 'CI', nombre: 'Condicion Insegura'},
+                    {'id': 'IN', nombre: 'Incidente'}],
                 departamentos: res.departamento.data,
+                consecuencias: res.consecuencia.data,
+                probabilidades: res.probabilidad.data,
+                formulas_nivel_riesgo: res.formula_nivel_riesgo.data,
             })
         });
         getTrabajadoresActivos().then(res => {
@@ -85,7 +96,10 @@ const Control = () => {
             draft[propiedad] = valor;
         }));
     };
-    const editarHallazgo = (hallazgos) => setHallazgoSelect(hallazgos);
+    const editarHallazgo = (hallazgos) => {
+        setNombreModal("#modalEdit");
+        setHallazgoSelect(hallazgos);
+    };
 
 
     const actualizaBuscador = (propiedad, valor) => {
@@ -99,7 +113,8 @@ const Control = () => {
                     return hallazgo.contratista_reportado.nombre.toLowerCase().indexOf(valor.toLocaleString()) > -1;
                 }
             } else {
-                return hallazgo.[propiedad].nombre.toLowerCase().indexOf(valor.toLocaleString()) > -1;
+
+                return hallazgo[propiedad] != null && hallazgo[propiedad].nombre.toLowerCase().indexOf(valor.toLocaleString()) > -1;
             }
         });
         if (valor != null && valor.length > 0) {
@@ -109,7 +124,24 @@ const Control = () => {
         }
     };
 
+    const guardar = (hallazgo) => guardarHallazgo(hallazgo).then(res => {
+        $("#modalEdit").modal("toggle");
+        consultarhallazgos();
+    });
 
+    const seleccionValidaHallazgo = (hallazgo_local) => {
+        setNombreModal("#ModalResponsableHallazgo");
+        setHallazgoSelect(hallazgo_local);
+    };
+
+    const validarHallazgo = responsable => validaHallazgo(hallazgo_select.id, responsable.id).then(res => {
+        consultarhallazgos();
+    });
+
+    const eliminarValidacion = (hallazgo) => {
+        confirmar('warning', 'Seguro que desea  quitar la validacion del hallazgo', 'Quitar Validacion').then(
+            res => res.value ? quitarValidacion(hallazgo.id).then(res=> consultarhallazgos()) : null
+    )}
     return (
         <Template>
             <div className="d-flex  justify-content-center container ">
@@ -162,15 +194,10 @@ const Control = () => {
                                            onChange={e => actualizaBuscador("reportado", e.target.value)}/></td>
                                 <td><input className="form-control-sm w-100"
                                            onChange={e => actualizaBuscador("descripcion", e.target.value)}/></td>
-
-                                <td><input className="form-control-sm w-100"
-                                           onChange={e => actualizaBuscador("tipo", e.target.value)}/></td>
-                                <td><input className="form-control-sm w-100"
-                                           onChange={e => actualizaBuscador("tipo_aplica", e.target.value)}/></td>
-                                <td><input className="form-control-sm w-100"
-                                           onChange={e => actualizaBuscador("rubro", e.target.value)}/></td>
                                 <td><input className="form-control-sm w-100"
                                            onChange={e => actualizaBuscador("departamento", e.target.value)}/></td>
+                                <td><input className="form-control-sm w-100"
+                                           onChange={e => actualizaBuscador("nivel_riego", e.target.value)}/></td>
                             </tr>
                         }
 
@@ -201,10 +228,16 @@ const Control = () => {
                                     <td className="d-flex justify-content-around">
                                         <button className="btn btn-sm btn-outline-secondary"
                                                 onClick={e => editarHallazgo(hallazgo)}><FaEdit/></button>
-                                        <button className="btn btn-sm btn-outline-secondary"
-                                                onClick={e => console.log()}><FaCheckCircle/></button>
-                                        <button className="btn btn-sm btn-outline-secondary"
-                                                onClick={e => console.log()}><FaTimesCircle/></button>
+                                        {
+                                            hallazgo.esta_validado ?
+                                                <button className="btn btn-sm btn-outline-danger"
+                                                        onClick={e => eliminarValidacion(hallazgo)}><FaTimesCircle/>
+                                                </button> :
+                                                <button className="btn btn-sm btn-outline-success"
+                                                        onClick={e => seleccionValidaHallazgo(hallazgo)}>
+                                                    <FaCheckCircle/>
+                                                </button>
+                                        }
                                     </td>
                                 </tr>
                             )
@@ -212,11 +245,18 @@ const Control = () => {
                         </tbody>
                     </table>
                 </div>
-                {
-                    hallazgo_select.id && <ModalEdit hallazgo={hallazgo_select} cats={cats}/>
-                }
 
             </div>
+            {
+                hallazgo_select.id &&
+                <ModalEdit hallazgo={hallazgo_select} cats={cats} trabajadores_activos={trabajadores_activos}
+                           guardar={guardar}/>
+            }
+            {
+                hallazgo_select.id && <ModalResponsableHallazgo validarHallazgo={validarHallazgo}
+                                                                trabajadores_activos={trabajadores_activos}/>
+            }
+
         </Template>
     );
 };
