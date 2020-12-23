@@ -111,14 +111,14 @@ const Listado = () => {
         let filter = hallazgos.filter(hallazgo => {
             if (propiedad === 'contratista_reportado_id' || propiedad === 'trabajador_reportado_id') {
                 return hallazgo[propiedad] != null;
-            } else if (propiedad === 'reportado') {
+            } else if (propiedad === "reportado") {
                 if (hallazgo.trabajador_reportado_id != null) {
                     return hallazgo.trabajador_reportado.fullName.toLowerCase().indexOf(valor.toLocaleString()) > -1;
                 } else if (hallazgo.contratista_reportado_id != null) {
                     return hallazgo.contratista_reportado.nombre.toLowerCase().indexOf(valor.toLocaleString()) > -1;
                 }
             } else {
-                return hallazgo.[propiedad].nombre.toLowerCase().indexOf(valor.toLocaleString()) > -1;
+                return hallazgo[propiedad].nombre.toLowerCase().indexOf(valor.toLocaleString()) > -1;
             }
         });
         if (valor != null && valor.length > 0) {

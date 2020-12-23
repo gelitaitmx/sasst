@@ -61,7 +61,7 @@ export const ITEMS_IZQUIERDA = {
             navlinks: [
                 {keyLang: 'navbar.documentos', to: "/documentos", 'icono': FaFileAlt, visible: true},
                 {keyLang: 'navbar.ara', to: "/aras", 'icono': FaHammer, visible: true},
-                {keyLang: 'navbar.simulacros', to: "/documentos/simulacros", 'icono': FaFire, visible: true},
+                {keyLang: 'navbar.simulacros', to: "/documento/simulacros", 'icono': FaFire, visible: true},
             ]
         }
     ]

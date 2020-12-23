@@ -8,6 +8,7 @@ import Home from './components/Template/Home';
 import Listado  from './components/Hallazgos/Listado'
 import Registro from "./components/Hallazgos/Registro";
 import ListadoAcciones  from './components/Acciones/Listado'
+import Docuementos  from './components/Documentos/Listado'
 
 
 
@@ -17,7 +18,7 @@ const ROUTES = [
     { exact: true, path: '/admin/acciones/:opcion', component: ListadoAcciones },
     { exact: true, path: '/aras', component: Aras },
     { exact: true, path: '/aras/consultar/:id', component: Ara },
-    { exact: true, path: '/documentos', component: EnConstruccion },
+    { exact: true, path: '/documentos', component: Docuementos },
     { exact: true, path: '/documentos/{tipo_documento}', component: EnConstruccion },
     { exact: true, path: '/hallazgo/listado', component: Listado },
     { exact: true, path: '/hallazgo/registro', component: Registro },

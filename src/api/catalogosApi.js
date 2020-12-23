@@ -4,17 +4,16 @@ import {
     ocultableDanger,
     guardadoCorrecto,
     cerrarAlert,
-    cargadoCorrecto
+    cargadoCorrecto, errorCargar, errorGuardar
 } from "../helpers/swalHelper";
 import {isLogged} from "../helpers/authHelper";
 import {trans} from "../services/lang.service";
-import moment from "moment";
 
 //----------Métodos Generales-------------------//
 export const getCatalogos = (solicitados, msg_cargando = true) => {
     if (msg_cargando)
         cargando();
-    return API.post('catalogos/getMultiAllGenerico', { 'peticiones': solicitados })
+    return API.post('catalogos/getMultiAllGenerico', {'peticiones': solicitados})
         .then(
             (res) => {
                 cerrarAlert();
@@ -22,7 +21,7 @@ export const getCatalogos = (solicitados, msg_cargando = true) => {
             }
         ).catch((error) => {
             if (isLogged())
-                ocultableDanger(trans('general.errorAlCargar'), trans('general.error'));
+                errorCargar(error);
             throw (error);
         });
 };
@@ -38,7 +37,7 @@ export const getTrabajadoresActivos = (solicitados, msg_cargando = true) => {
             }
         ).catch((error) => {
             if (isLogged())
-                ocultableDanger(trans('general.errorAlCargar'), trans('general.error'));
+                errorCargar(error);
             throw (error);
         });
 };
@@ -47,7 +46,7 @@ export const getTrabajadoresActivos = (solicitados, msg_cargando = true) => {
 export const getPermiso = (relaciones, msg_cargando) => {
     if (msg_cargando)
         cargando();
-    return API.post(`catalogos/getAllGenerico/permiso`, { 'relaciones': relaciones })
+    return API.post(`catalogos/getAllGenerico/permiso`, {'relaciones': relaciones})
         .then(
             (res) => {
                 cerrarAlert();
@@ -60,9 +59,9 @@ export const getPermiso = (relaciones, msg_cargando) => {
         });
 };
 
-export const guardarGenerico = (catalogo,datos) => {
-    let direccion='catalogos/guardarGenerico/';
-    let url=direccion+catalogo;
+export const guardarGenerico = (catalogo, datos) => {
+    let direccion = 'catalogos/guardarGenerico/';
+    let url = direccion + catalogo;
     return API.post(url, datos)
         .then(
             (res) => {
@@ -71,17 +70,17 @@ export const guardarGenerico = (catalogo,datos) => {
             }
         ).catch((error) => {
             if (isLogged()) {
-                ocultableDanger(trans('general.errorAlGuardar'), trans('general.error'));
+                errorGuardar(error);
                 throw (error);
             }
         });
 };
 
 
-export const getTrabajadorPorId = (id, relaciones , msg_cargando = false) => {
+export const getTrabajadorPorId = (id, relaciones, msg_cargando = false) => {
     if (msg_cargando)
         cargando();
-    return API.post('catalogos/getTrabajador', { 'trabajador_id': id , 'relaciones':relaciones})
+    return API.post('catalogos/getTrabajador', {'trabajador_id': id, 'relaciones': relaciones})
         .then(
             (res) => {
                 cerrarAlert();
@@ -89,7 +88,7 @@ export const getTrabajadorPorId = (id, relaciones , msg_cargando = false) => {
             }
         ).catch((error) => {
             if (isLogged())
-                ocultableDanger(trans('general.errorAlCargar'), trans('general.error'));
+                errorCargar(error);
             throw (error);
         });
 };

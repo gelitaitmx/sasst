@@ -52,7 +52,6 @@ const Listado = ({match}) => {
     }, [fechas, control.permisos]);
 
     const validarConsulta = () => {
-        console.log(can('hallazgo.ver_todos_hallazgos'));
         if (can('hallazgo.ver_todos_hallazgos')) {
             consultarhallazgos();
         } else {
@@ -117,26 +116,7 @@ const Listado = ({match}) => {
         setHallazgoSelect(hallazgos);
     };
 
-    const actualizaBuscador = (propiedad, valor) => {
-        let filter = hallazgos.filter(hallazgo => {
-            if (propiedad === 'contratista_reportado_id' || propiedad === 'trabajador_reportado_id') {
-                return hallazgo[propiedad] != null;
-            } else if (propiedad === 'reportado') {
-                if (hallazgo.trabajador_reportado_id != null) {
-                    return hallazgo.trabajador_reportado.fullName.toLowerCase().indexOf(valor.toLocaleString()) > -1;
-                } else if (hallazgo.contratista_reportado_id != null) {
-                    return hallazgo.contratista_reportado.nombre.toLowerCase().indexOf(valor.toLocaleString()) > -1;
-                }
-            } else {
-                return hallazgo.[propiedad].nombre.toLowerCase().indexOf(valor.toLocaleString()) > -1;
-            }
-        });
-        if (valor != null && valor.length > 0) {
-            setHallazgos(filter);
-        } else {
-            setHallazgos(hallazgosAll);
-        }
-    };
+
 
     const guardarAccionCorrectiva = (accion) => {
         guardarAccion(accion, hallazgo_select.id).then(res => {
