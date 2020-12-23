@@ -9,3 +9,4 @@ export const  CLAVEINICIO = 'INI';
 export const  CLAVEDESCRIPCION = 'DES';
 export const  CLAVEDEPARTAMENTO = 'DEP';
 export const  CLAVETIPOACTO = 'TAC';
+export const  OPCIONACCIONES = 'ADMIN';

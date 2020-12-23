@@ -26,7 +26,7 @@ const ModalEdit = ({hallazgo, cats, trabajadores_activos, guardar}) => {
 
     const actualizarHallazgo = (propiedad, valor, clave) => {
         setHallazgoEdit(produce(hallazgoEdit, draft => {
-            if (propiedad == 'tipo_acto')
+            if (propiedad == 'tipo_acto' && valor != null)
                 draft.tipo = valor.id;
             draft[propiedad] = valor;
         }));

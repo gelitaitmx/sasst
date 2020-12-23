@@ -1,5 +1,15 @@
 import {trans} from "../../services/lang.service";
-import {FaList, FaWrench, FaGripVertical, FaFileAlt, FaHammer, FaFire} from "react-icons/all";
+import {
+    FaList,
+    FaWrench,
+    FaAutoprefixer,
+    FaGripVertical,
+    FaFileAlt,
+    FaHammer,
+    FaFire,
+    FaPlus,
+    FaPlusCircle
+} from "react-icons/all";
 import {can} from "../../services/seguridad.service";
 
 /**
@@ -15,6 +25,12 @@ import {can} from "../../services/seguridad.service";
 export const ITEMS_IZQUIERDA = {
     menus: [
         {
+            keyLang: 'navbar.registrar',
+            icono: FaPlusCircle,
+            visible: true,
+            tipo: 'navlink',
+            nlOptions: {to: '/hallazgo/registro'}
+        },  {
             keyLang: 'navbar.hallazgo',
             icono: FaList,
             visible: true,
@@ -22,7 +38,7 @@ export const ITEMS_IZQUIERDA = {
             nlOptions: {to: '/hallazgo/Listado'}
         }, {
             keyLang: 'navbar.acciones',
-            icono: FaList,
+            icono: FaAutoprefixer,
             visible: true,
             tipo: 'navlink',
             nlOptions: {to: '/acciones/Listado'}
@@ -34,6 +50,7 @@ export const ITEMS_IZQUIERDA = {
             tipo: 'dropdown',
             navlinks: [
                 {keyLang: 'navbar.control', to: "/admin/control", 'icono': FaList, visible: true},
+                {keyLang: 'navbar.acciones', to: "/admin/acciones/ADMIN", 'icono': FaAutoprefixer, visible: true},
             ]
         },
         {

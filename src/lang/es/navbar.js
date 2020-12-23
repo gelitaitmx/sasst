@@ -4,6 +4,7 @@ export const navbar = {
 
 
     //|------Estáticos------|//
+    acciones: 'Acciones',
     analisisRiesgo: 'Análisis de riesgo',
     ara: 'ARA - Análisis de riesgo de actividades',
     autorizacion: 'Autorizacion',
@@ -24,6 +25,7 @@ export const navbar = {
     motivo: 'Motivo',
     password: 'Password',
     permisos: 'Permisos',
+    registrar: 'Registrar Hallazgo',
     rol: 'Rol',
     roles: 'Roles',
     seccionPermisos: 'Sección permisos',

@@ -27,6 +27,24 @@ export const getAllHallazgos = (filtros, relaciones, msg_cargando = true) => {
         });
 };
 
+export const getHallazgoId = (id, relaciones, msg_cargando = true) => {
+    if (msg_cargando)
+        cargando();
+    return API.post('hallazgos/get', {
+       hallazgo_id: id, relaciones: relaciones
+    })
+        .then(
+            (res) => {
+                cerrarAlert();
+                return res.data;
+            }
+        ).catch((error) => {
+            if (isLogged())
+                ocultableDanger(trans('general.errorAlCargar'), trans('general.error'));
+            throw (error);
+        });
+};
+
 export const guardarHallazgo = (hallazgo, msg_cargando = true) => {
     if (msg_cargando)
         cargando();
@@ -60,10 +78,26 @@ export const validaHallazgo = (hallazgo_id, responsable_id, msg_cargando = true)
 };
 
 
-export const quitarValidacion = (hallazgo_id, responsable_id, msg_cargando = true) => {
+export const quitarValidacion = (hallazgo_id, msg_cargando = true) => {
     if (msg_cargando)
         cargando();
     return API.post('hallazgos/quitarValidacion', {'hallazgo_id': hallazgo_id  })
+        .then(
+            (res) => {
+                cerrarAlert();
+                return res.data;
+            }
+        ).catch((error) => {
+            if (isLogged())
+                ocultableDanger(trans('general.errorAlCargar'), trans('general.error'));
+            throw (error);
+        });
+};
+
+export const validarAccionCorrectiva = ( accion_id, msg_cargando = true) => {
+    if (msg_cargando)
+        cargando();
+    return API.post('hallazgos/validarAccionCorrectiva', {'accion_correctiva_id':accion_id  })
         .then(
             (res) => {
                 cerrarAlert();
