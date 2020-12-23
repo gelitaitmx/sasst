@@ -1,5 +1,6 @@
 import React from 'react';
 import { BrowserRouter } from 'react-router-dom';
+import Ara from "./components/Aras/Ara";
 import Aras from "./components/Aras/Aras";
 import Control from "./components/Admin/Control";
 import EnConstruccion from "./components/Template/EnConstruccion";
@@ -15,7 +16,7 @@ const ROUTES = [
     { exact: true, path: '/acciones/listado', component: ListadoAcciones },
     { exact: true, path: '/admin/acciones/:opcion', component: ListadoAcciones },
     { exact: true, path: '/aras', component: Aras },
-    { exact: true, path: '/aras/consultar/:id', component: EnConstruccion },
+    { exact: true, path: '/aras/consultar/:id', component: Ara },
     { exact: true, path: '/documentos', component: EnConstruccion },
     { exact: true, path: '/documentos/{tipo_documento}', component: EnConstruccion },
     { exact: true, path: '/hallazgo/listado', component: Listado },

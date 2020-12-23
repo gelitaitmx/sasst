@@ -1,7 +1,7 @@
 export const ara = {
     acciones: 'Acciones',
     actividad: 'Actividad',
-    agregarActividad: 'Agregar inventario',
+    agregarActividad: 'Agregar Actividad',
     agregarInventario: 'Agregar inventario',
     capacitacionAdiestramiento: 'Capacitación y adiestramiento',
     departamento: 'Departamento',
@@ -10,7 +10,7 @@ export const ara = {
     evaluacionHigiene: 'Evaluación de higiene industrial',
     evaluacionRiesgo: 'Evaluación del riesgo',
     fecha: 'Fecha',
-    fechaAnálisis: 'Fecha de análisis',
+    fechaAnalisis: 'Fecha de análisis',
     frecuencia: 'Frecuencia',
     gravedad: 'Gravedad',
     nivelRiesgo: 'Nivel de riesgo',
@@ -24,6 +24,7 @@ export const ara = {
     responsable: 'Responsable',
     riesgo: 'Riesgo',
     rutinaria: 'Rutinaria',
+    tomarEnConsideracion: 'Tomar en consideración los problemas de seguridad, salud, daño, incendio, calidad, producción',
 
 
     insAra: ' En el panel de la derecha aparecen los innventarios de actividades registrados. Dé click sobre el ' +
