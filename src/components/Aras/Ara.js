@@ -15,7 +15,11 @@ import produce from "immer";
 import AraActividadModel from "../../Models/AraActividadModel";
 import {isLogged} from "../../helpers/authHelper";
 import {getCatalogos} from "../../api/catalogosApi";
-import {getAra} from "../../api/araApi";
+import {getAra, guardaAra} from "../../api/araApi";
+import ModalGravedad from "./ModalGravedad";
+import ModalFrecuencia from "./ModalFrecuencia";
+import ModalProbabilidad from "./ModalProbabilidad";
+import $ from 'jquery';
 
 let Aras = () => {
     //|------Hooks------|//
@@ -23,6 +27,7 @@ let Aras = () => {
     const [control, setControl] = useGlobal('control');
     const [ara, setAra] = useState({fecha_analisis: moment().toDate()});
     const [cats, setCats] = useState({departamentos: [], trabajadores: []});
+    const [control_modal, setControlModal] = useState({idx_actividad: -1, idx_riesgo: -1, tipo: null});
 
 //|------UseEffects------|//
     useEffect(() => {
@@ -31,6 +36,12 @@ let Aras = () => {
             cargarCatalogos(cargar_ara);
         }
     }, []);
+
+    useEffect(() => {
+        control_modal.tipo == 'gravedad' && $("#modalGravedad").modal();
+        control_modal.tipo == 'frecuencia' && $("#modalFrecuencia").modal();
+        control_modal.tipo == 'probabilidad' && $("#modalProbabilidad").modal();
+    }, [control_modal]);
 
 //|------Funciones------|//
     //|------GUI------|//
@@ -63,6 +74,13 @@ let Aras = () => {
             cerrarAlert();
         }).catch(noop);
     };
+    const guardarAra = () => {
+        console.log(ara);
+        guardaAra(ara).then(res => {
+            console.log(res);
+            cerrarAlert();
+        }).catch(noop);
+    };
     //|------Operaciones------|//
 
 //|------DatosIniciales------|//
@@ -72,23 +90,28 @@ let Aras = () => {
     return (
         <Template>
             <Titulo titulo={trans('navbar.ara')}>
-                <BotonesPrincipales agregarActividad={agregarActividad}/>
+                <BotonesPrincipales agregarActividad={agregarActividad} guardarAra={guardarAra}/>
             </Titulo>
             <div className='d-flex flex-column'>
                 <InfoGeneral ara={ara} setAra={setAra} cats={cats}/>
-                <Actividades ara={ara} setAra={setAra}/>
+                <Actividades ara={ara} setAra={setAra} control_modal={control_modal} setControlModal={setControlModal}/>
             </div>
+            <ModalGravedad ara={ara} setAra={setAra} control_modal={control_modal}/>
+            <ModalFrecuencia ara={ara} setAra={setAra} control_modal={control_modal}/>
+            <ModalProbabilidad ara={ara} setAra={setAra} control_modal={control_modal}/>
         </Template>
     );
 }
 
 //|------Subcomponentes------|//
-const BotonesPrincipales = ({agregarActividad}) => <div className='container d-flex justify-content-between pt-1'>
+const BotonesPrincipales = ({agregarActividad, guardarAra}) => <div
+    className='container d-flex justify-content-between pt-1'>
     <button className='btn btn-outline-purple' onClick={() => agregarActividad()}>
         <FaPlusCircle/>
         {trans('ara.agregarActividad')}
     </button>
-    <button className='btn btn-outline-success'>
+    <button className='btn btn-outline-success'
+            onClick={() => guardarAra()}>
         <FaSave/>
         {trans('general.guardar')}
     </button>
