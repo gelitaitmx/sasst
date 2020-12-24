@@ -6,4 +6,6 @@ export const  documento = {
     documentos: "Documentos",
     nombre: "Nombre",
     tipo_documento: "Tipo documento",
+
+    SIMU:"Simulacro"
 };

@@ -9,6 +9,7 @@ import Listado  from './components/Hallazgos/Listado'
 import Registro from "./components/Hallazgos/Registro";
 import ListadoAcciones  from './components/Acciones/Listado'
 import Docuementos  from './components/Documentos/Listado'
+import Indicadores  from './components/Indicador/Indicadores'
 
 
 
@@ -19,10 +20,11 @@ const ROUTES = [
     { exact: true, path: '/aras', component: Aras },
     { exact: true, path: '/aras/consultar/:id', component: Ara },
     { exact: true, path: '/documentos', component: Docuementos },
-    { exact: true, path: '/documentos/{tipo_documento}', component: EnConstruccion },
+    { exact: true, path: '/documentos/:tipo_documento', component: Docuementos },
     { exact: true, path: '/hallazgo/listado', component: Listado },
     { exact: true, path: '/hallazgo/registro', component: Registro },
     { exact: true, path: '/hallazgo/consultar/:id', component: Registro },
+    { exact: true, path: '/indicadores', component: Indicadores },
     { exact: true, path: '/404', component: NotFound },
     { exact: true, path: '/', component: Home },
 ];

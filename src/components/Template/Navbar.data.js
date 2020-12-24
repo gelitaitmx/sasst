@@ -8,7 +8,7 @@ import {
     FaHammer,
     FaFire,
     FaPlus,
-    FaPlusCircle
+    FaPlusCircle, FaInfo
 } from "react-icons/all";
 import {can} from "../../services/seguridad.service";
 
@@ -61,25 +61,22 @@ export const ITEMS_IZQUIERDA = {
             navlinks: [
                 {keyLang: 'navbar.documentos', to: "/documentos", 'icono': FaFileAlt, visible: true},
                 {keyLang: 'navbar.ara', to: "/aras", 'icono': FaHammer, visible: true},
-                {keyLang: 'navbar.simulacros', to: "/documento/simulacros", 'icono': FaFire, visible: true},
+                {keyLang: 'navbar.simulacros', to: "/documentos/SIMU", 'icono': FaFire, visible: true},
             ]
         }
     ]
 };
 export const ITEMS_DERECHA = {
-    // menus: [
-    //     {
-    //         keyLang: 'general.catalogos',
-    //         icono: FaList,
-    //         visible: true,
-    //         tipo: 'dropdown',
-    //         navlinks: [
-    //             {keyLang: 'nose.1', to: "reportes/uno"},
-    //             {keyLang: 'nose.1', to: "reportes/dos", icono: FaList},
-    //             {keyLang: 'nose.1', to: "reportes/tres"},
-    //             {keyLang: 'nose.1', to: "reportes/cuatro"}
-    //         ]
-    //     },
+    menus: [
+        {
+            keyLang: 'navbar.reportes',
+            icono: FaList,
+            visible: true,
+            tipo: 'dropdown',
+            navlinks: [
+                {keyLang: 'navbar.indicadores', to: "/indicadores", 'icono': FaInfo},
+            ]
+        }
     //     {
     //         keyLang: 'general.admin',
     //         icono: FaList,
@@ -99,5 +96,5 @@ export const ITEMS_DERECHA = {
     //         tipo: 'navlink',
     //         nlOptions: {to: 'jobs'}
     //     },
-    // ]
+    ]
 };

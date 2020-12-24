@@ -17,11 +17,13 @@ import {noop} from "../../helpers/generalHelper";
 import {consulta} from "../../api/araApi";
 
 
-const Listado = () => {
+const Listado = ({match}) => {
+
     const [control, setControl] = useGlobal('control');
     const [new_documento, setDocumento] = useState(null);
     const [documentos, setDocumentos] = useState([]);
     const [tipos_documento, setTiposDocumentos] = useState([]);
+    const [tipo_documento, setTipoDocumento] = useState({});
     const [tipos_documento_all, setTiposDocumentosAll] = useState([]);
     const [buscador, setBuscador] = useState({});
     const [fecha_moment, setFechaMoment] = useState(null);
@@ -29,15 +31,30 @@ const Listado = () => {
     const [fecha_fin, setFechaFin] = useState(moment().endOf('year').toDate());
 
     useEffect(() => {
-        cargarCatalogos();
+        if (!match.params.tipo_documento) {
+            cargarCatalogos();
+            console.log('tengo que cargar todo');
+            consultarDocumentos();
+        }
     }, []);
+
+    useEffect(() => {
+        if (match.params.tipo_documento != null && match.params.tipo_documento !== 'undefined')
+            cargarCatalogos(match.params.tipo_documento);
+    }, [match.params.tipo_documento]);
+
+    useEffect(() => {
+        if (tipo_documento.id != null)
+            consultarDocumentosPorClave();
+    }, [tipos_documento]);
 
     useEffect(() => setDocumentos(filtrarArreglo(tipos_documento_all, buscador)), [tipos_documento_all, buscador]);
 
-    const cargarCatalogos = () => {
+    const cargarCatalogos = (tipo_doc = null) => {
         getCatalogos([{nombre: 'tipo_documento', relaciones: []}]).then(res => {
+            if (tipo_doc != null)
+                setTipoDocumento(res.tipo_documento.data.filter(tipo => tipo.clave === tipo_doc)[0]);
             setTiposDocumentos(res.tipo_documento.data);
-            consultarDocumentos(res.tipo_documento.data);
         });
     };
 
@@ -49,7 +66,18 @@ const Listado = () => {
         });
     };
 
-    const agregarDocumento = () => setDocumento({tipo_documento: {nombre: ''}});
+    const consultarDocumentosPorClave = () => {
+        console.log('no debi entrar aqui');
+        consultaPorTipo(tipo_documento.id).then(res => {
+            setDocumentos(res);
+            setTiposDocumentosAll(res);
+        });
+    };
+
+    const agregarDocumento = () => setDocumento({
+        tipo_documento: tipo_documento.id != null ? tipo_documento : {nombre: ''},
+        tipo_documento_id: tipo_documento.id != null ? tipo_documento.id : null
+    });
 
     const actualizarDocumento = (propiedad, valor) => {
         setDocumento(produce(draft => {
@@ -62,7 +90,7 @@ const Listado = () => {
 
     const guardarDocumento = () => {
         guardarAdjuntoConTipo(new_documento).then(res => {
-            consultarDocumentos();
+            tipo_documento.id != null ? consultarDocumentosPorClave() : consultarDocumentos();
             setDocumento(null)
         });
     }
@@ -73,7 +101,11 @@ const Listado = () => {
 
     return <Template>
         <div>
-            <Titulo titulo={trans('documento.documentos')}/>
+            {
+                match.params.tipo_documento ? <Titulo titulo={trans(`documento.${match.params.tipo_documento}`)}/> :
+                    <Titulo titulo={trans('documento.documentos')}/>
+            }
+
             <div className="container">
                 <div className='d-flex justify-content-around'>
 
@@ -102,9 +134,12 @@ const Listado = () => {
                                     <input className='form-control form-control-sm'
                                            onChange={(e) => setBuscador({...buscador, nombre: e.target.value})}/>
                                 </th>
-                                <th>  <button className="btn btn-outline-success text-small text-nowrap" onClick={(e) => agregarDocumento()}>
-                                    <FaPlusCircle/>{trans('documento.agregar')}
-                                </button></th>
+                                <th>
+                                    <button className="btn btn-outline-success text-small text-nowrap"
+                                            onClick={(e) => agregarDocumento()}>
+                                        <FaPlusCircle/>{trans('documento.agregar')}
+                                    </button>
+                                </th>
                             </tr>
                             </thead>
                             <tbody className="table-hover">
