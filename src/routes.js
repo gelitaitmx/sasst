@@ -12,6 +12,7 @@ import Docuementos from './components/Documentos/Listado'
 import Indicadores from './components/Indicador/Indicadores'
 import Reporte from './components/Indicador/Reporte'
 import Graficas from './components/Indicador/Graficas'
+import PiramideResultados from './components/Indicador/PiramideResultados'
 
 
 const ROUTES = [
@@ -28,6 +29,7 @@ const ROUTES = [
     {exact: true, path: '/indicadores/listado', component: Indicadores},
     {exact: true, path: '/indicadores/graficas', component: Graficas},
     {exact: true, path: '/indicadores/reporte', component: Reporte},
+    {exact: true, path: '/indicadores/piramide', component: PiramideResultados},
     {exact: true, path: '/404', component: NotFound},
     {exact: true, path: '/', component: Home},
 ];

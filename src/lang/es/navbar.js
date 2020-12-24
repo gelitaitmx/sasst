@@ -28,6 +28,7 @@ export const navbar = {
     motivo: 'Motivo',
     password: 'Password',
     permisos: 'Permisos',
+    piramide: 'Piramide',
     registrar: 'Registrar Hallazgo',
     rol: 'Rol',
     roles: 'Roles',

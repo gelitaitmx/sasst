@@ -8,7 +8,7 @@ import {
     FaHammer,
     FaFire,
     FaPlus,
-    FaPlusCircle, FaInfo, FaChartLine
+    FaPlusCircle, FaInfo, FaChartLine, FaGopuram
 } from "react-icons/all";
 import {can} from "../../services/seguridad.service";
 
@@ -74,6 +74,7 @@ export const ITEMS_DERECHA = {
             visible: true,
             tipo: 'dropdown',
             navlinks: [
+                {keyLang: 'navbar.piramide', to: "/indicadores/piramide", 'icono': FaGopuram},
                 {keyLang: 'navbar.indicadoresAdmin', to: "/indicadores/listado", 'icono': FaInfo},
                 {keyLang: 'navbar.indicadoresReporte', to: "/indicadores/reporte", 'icono': FaFileAlt},
                 {keyLang: 'navbar.indicadoresGraficas', to: "/indicadores/graficas", 'icono': FaChartLine},
