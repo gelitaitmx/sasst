@@ -213,3 +213,23 @@
   width: 85px; /* 80 / cos(45) - 40 cos (45) = 85 where 80 is the height of the cell, 40 the width of the cell and 45 the transform angle*/
   text-align: left;
 }
+
+
+/*Para la piramide*/
+.barraPiramide{
+  border: #000 solid 2px;
+  padding:.5%;
+  float: left;
+  clear:left;
+  display: block;
+  margin-top:4px;
+}
+.barra1{background-color: #C00000; width:60%; margin-left:20%}
+.barra2{background-color: #F80000; width:70%; margin-left:15%}
+.barra3{background-color: #F8C000; width:80%; margin-left:10%}
+.barra4{background-color: #F8F800; width:90%; margin-left:5%}
+.barra5{background-color: #F8F860; width:100%;}
+.cajaBlancaDato{width: 50%; background-color: #fff; color:#000; float: left; font-weight: bold}
+.rotuloBlanco{width: 50%; color:#fff; float: left; clear:left}
+.rotuloNegro{width: 50%; color:#000; float: left; clear:left }
+.etiqueta{width:100%; float:left; font-size: 1em;clear:left; text-align: center}

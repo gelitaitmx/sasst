@@ -4,7 +4,7 @@ import Ara from "./components/Aras/Ara";
 import Aras from "./components/Aras/Aras";
 import Control from "./components/Admin/Control";
 import EnConstruccion from "./components/Template/EnConstruccion";
-import Home from './components/Template/Home';
+import Home from './components/Home/Home';
 import Listado from './components/Hallazgos/Listado'
 import Registro from "./components/Hallazgos/Registro";
 import ListadoAcciones from './components/Acciones/Listado'

@@ -3,7 +3,7 @@ import API from "./axios";
 import moment from "moment";
 import {isLogged} from "../helpers/authHelper";
 import {trans} from "../services/lang.service";
-import {mostrarErrorCargar, mostrarErrorGuardar} from "./responsesApi";
+import {mostrarErrorCargar, mostrarErrorGuardar, returnCargadoCorrecto} from "./responsesApi";
 
 
 export const getAllHallazgos = (filtros, relaciones, msg_cargando = true) => {
@@ -44,6 +44,13 @@ export const getHallazgoId = (id, relaciones = [], msg_cargando = true) => {
                 mostrarErrorCargar(error);
             throw (error);
         });
+};
+
+
+export const getUltimos5 = (mostrar_cargando = false, mostrar_correcto = false, mostrar_error = true) => {
+    if (mostrar_cargando)
+        cargando();
+    return API.post('hallazgos/getUltimos5', {}).then(res => mostrar_correcto ? returnCargadoCorrecto(res.data) : res.data).catch((err) => mostrar_error ? mostrarErrorCargar(err) : err);
 };
 
 export const guardarHallazgo = (hallazgo, msg_cargando = true) => {
@@ -93,6 +100,12 @@ export const quitarValidacion = (hallazgo_id, msg_cargando = true) => {
                 mostrarErrorGuardar(error);
             throw (error);
         });
+};
+
+export const getTrabajadoresMasHallazgos = (mostrar_cargando = false, mostrar_correcto = false, mostrar_error = true) => {
+    if (mostrar_cargando)
+        cargando();
+    return API.post('hallazgos/trabajadoresMasHallazgos', {}).then(res => mostrar_correcto ? returnCargadoCorrecto(res.data) : res.data).catch((err) => mostrar_error ? mostrarErrorCargar(err) : err);
 };
 
 export const validarAccionCorrectiva = (accion_id, msg_cargando = true) => {

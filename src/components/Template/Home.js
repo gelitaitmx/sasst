@@ -11,7 +11,7 @@ const Home = () => {
     return (
         <Template >
             <div className="container">
-                <Titulo titulo={trans('navbar.bienvenido')}/>
+                <Titulo titulo={trans('anavbar.bienvenido')}/>
                 <div  className="text-center ">
 
                 </div>
