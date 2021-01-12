@@ -8,6 +8,8 @@ import PanelUltimos5 from "./PanelUltimos5";
 import Piramide from "./Piramide";
 import Video from "./Video";
 import MasHallazgos from "./MasHallazgos";
+import PorDepto from "./PorDepto";
+import Bitacora from "./Bitacora";
 
 const Home = () => {
     //|------Hooks------|//
@@ -22,8 +24,10 @@ const Home = () => {
             <Piramide/>
             <Video/>
         </div>
-        <div className='row'>
+        <div className='row mt-4'>
             <MasHallazgos/>
+            <PorDepto/>
+            <Bitacora/>
         </div>
     </Template>);
 };
