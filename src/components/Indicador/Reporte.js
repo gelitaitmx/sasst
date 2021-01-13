@@ -9,20 +9,24 @@ import {getCatalogos} from "../../api/catalogosApi";
 import produce from "immer";
 import {FaSave} from "react-icons/all";
 import {indicador} from "../../lang/es";
+import {procesarConfiguraciones} from "../../helpers/generalHelper";
 
 
 const Indicadores = () => {
     const [control, setControl] = useGlobal('control');
     const [monthYear, setMonthYear] = useState(null);
-    const [indicadores, setIndicadores] = useState({});
+    const [indicadores, setIndicadores] = useState([]);
 
     useEffect(() => {
         if (monthYear != null) cargarDatos()
     }, [monthYear]);
 
     const cargarDatos = () => {
+        consultar(monthYear, ['parametro_indicador']).then(res => {
+            setIndicadores(res);
+        })
+    };
 
-    }
 
     return <Template>
         <div className="d-flex justify-content-center p-2">
@@ -52,10 +56,10 @@ const Indicadores = () => {
                 <tr>
                     <td className="rgba-red-light">{trans('indicador.CONIN')}</td>
                     <td className="rgba-orange-light">{trans('indicador.100x')}</td>
-                    <td className="rgba-orange-light">{(indicadores || {}).valor}</td>
+                    <td className="rgba-orange-light">{((indicadores || {}).condicion_insegura || {}).condiciones_inseguras_eliminadas}</td>
                     <td className="rgba-orange-light">{trans('indicador./')}</td>
-                    <td className="rgba-orange-light">{(indicadores || {}).valor}</td>
-                    <td className="rgba-green-light">{(indicadores || {}).total}</td>
+                    <td className="rgba-orange-light">{((indicadores || {}).condicion_insegura || {}).condiciones_inseguras_detectadas}</td>
+                    <td className="rgba-green-light">{((indicadores || {}).condicion_insegura || {}).ect}</td>
                 </tr>
                 <tr>
                     <th>{trans('indicador.ACTIN')} =</th>
@@ -68,10 +72,10 @@ const Indicadores = () => {
                 <tr>
                     <td className="rgba-red-light">{trans('indicador.ACTIN')}</td>
                     <td className="rgba-orange-light">{trans('indicador.100x')}</td>
-                    <td className="rgba-orange-light">{(indicadores || {}).valor}</td>
+                    <td className="rgba-orange-light">{((indicadores || {}).acto_inseguro || {}).actos_inseguros_con_accion}</td>
                     <td className="rgba-orange-light">{trans('indicador./')}</td>
-                    <td className="rgba-orange-light">{(indicadores || {}).valor}</td>
-                    <td className="rgba-green-light">{(indicadores || {}).total}</td>
+                    <td className="rgba-orange-light">{((indicadores || {}).acto_inseguro || {}).actos_inseguros_reportados}</td>
+                    <td className="rgba-green-light">{((indicadores || {}).acto_inseguro || {}).ais}</td>
                 </tr>
                 <tr>
                     <th>{trans('indicador.ACCID')} =</th>
@@ -84,10 +88,10 @@ const Indicadores = () => {
                 <tr>
                     <td className="rgba-red-light">{trans('indicador.ACCID')}</td>
                     <td className="rgba-orange-light">{trans('indicador.100x')}</td>
-                    <td className="rgba-orange-light">{(indicadores || {}).valor}</td>
+                    <td className="rgba-orange-light">{((indicadores || {}).accidente || {}).dpa}</td>
                     <td className="rgba-orange-light">{trans('indicador./')}</td>
-                    <td className="rgba-orange-light">{(indicadores || {}).valor}</td>
-                    <td className="rgba-green-light">{(indicadores || {}).total}</td>
+                    <td className="rgba-orange-light">{((indicadores || {}).accidente || {}).dias_perdidos_por_accidentes}</td>
+                    <td className="rgba-green-light">{((indicadores || {}).accidente || {}).total_accidentes}</td>
                 </tr>
                 <tr>
                     <th>{trans('indicador.TRARI')} =</th>
@@ -100,10 +104,10 @@ const Indicadores = () => {
                 <tr>
                     <td className="rgba-red-light">{trans('indicador.TRARI')}</td>
                     <td className="rgba-orange-light">{trans('indicador.100x')}</td>
-                    <td className="rgba-orange-light">{(indicadores || {}).valor}</td>
+                    <td className="rgba-orange-light">{((indicadores || {}).trabajos_riesgo|| {}).trabajos_de_riesgo_cumplen_norma}</td>
                     <td className="rgba-orange-light">{trans('indicador./')}</td>
-                    <td className="rgba-orange-light">{(indicadores || {}).valor}</td>
-                    <td className="rgba-green-light">{(indicadores || {}).total}</td>
+                    <td className="rgba-orange-light">{((indicadores || {}).trabajos_riesgo|| {}).trabajos_de_riesgo_inspeccionados}</td>
+                    <td className="rgba-green-light">{((indicadores || {}).trabajos_riesgo|| {}).efectividad_riesgo }</td>
                 </tr>
                 <tr>
                     <th>{trans('indicador.USEPP')} =</th>
@@ -116,10 +120,10 @@ const Indicadores = () => {
                 <tr>
                     <td className="rgba-red-light">{trans('indicador.USEPP')}</td>
                     <td className="rgba-orange-light">{trans('indicador.100x')}</td>
-                    <td className="rgba-orange-light">{(indicadores || {}).valor}</td>
+                    <td className="rgba-orange-light">{((indicadores || {}).efectividad_epp || {}).trabajadores_sin_epp}</td>
                     <td className="rgba-orange-light">{trans('indicador./')}</td>
-                    <td className="rgba-orange-light">{(indicadores || {}).valor}</td>
-                    <td className="rgba-green-light">{(indicadores || {}).total}</td>
+                    <td className="rgba-orange-light">{((indicadores || {}).efectividad_epp || {}).trabajadores_del_departamento}</td>
+                    <td className="rgba-green-light">{((indicadores || {}).efectividad_epp || {}).efectividad_epp}</td>
                 </tr>
                 <tr>
                     <th>{trans('indicador.CAPAC')} =</th>
@@ -132,10 +136,10 @@ const Indicadores = () => {
                 <tr>
                     <td className="rgba-red-light">{trans('indicador.CAPAC')}</td>
                     <td className="rgba-orange-light">{trans('indicador.100x')}</td>
-                    <td className="rgba-orange-light">{(indicadores || {}).valor}</td>
+                    <td className="rgba-orange-light">{((indicadores || {}).horas_capacitacion || {}).capacitacion}</td>
                     <td className="rgba-orange-light">{trans('indicador./')}</td>
-                    <td className="rgba-orange-light">{(indicadores || {}).valor}</td>
-                    <td className="rgba-green-light">{(indicadores || {}).total}</td>
+                    <td className="rgba-orange-light">{((indicadores || {}).horas_capacitacion || {}).total_horas_hombre_capacitacion}</td>
+                    <td className="rgba-green-light">{((indicadores || {}).horas_capacitacion || {}).trabajadores_del_departamento}</td>
                 </tr>
                 </tbody>
             </table>

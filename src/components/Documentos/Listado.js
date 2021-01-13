@@ -9,12 +9,8 @@ import {consultaPorTipo, consultar, descarga, guardarAdjuntoConTipo} from "../..
 import {getCatalogos} from "../../api/catalogosApi";
 import DatePicker from "react-datepicker";
 import filtrarArreglo from "../../helpers/filterHelper";
-import {Typeahead} from "react-bootstrap-typeahead";
 import produce from "immer";
-import FilesDropzone from "../Template/FilesDropzone";
 import Agregar from "./Agregar";
-import {noop} from "../../helpers/generalHelper";
-import {consulta} from "../../api/araApi";
 
 
 const Listado = ({match}) => {

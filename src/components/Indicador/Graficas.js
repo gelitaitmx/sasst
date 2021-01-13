@@ -7,26 +7,13 @@ import moment from "moment";
 import Highcharts from 'highcharts';
 import HighchartsReact from 'highcharts-react-official';
 import {indicador} from "../../lang/es";
+import {consutarReportePorAnyo} from "../../api/indicadorApi";
 
 const Graficas = () => {
         const [control, setControl] = useGlobal('control');
         const [anio, setAnio] = useState(moment().toDate());
-        const [indicadores, setIndicadores] = useState({
-            condiciones_inseguras: {
-                enero: 1,
-                febrero: 2,
-                marzo: 5,
-                abril: 2,
-                mayo: 8,
-                junio: 2,
-                julio:7,
-                agosto: 2,
-                septiembre:12,
-                octubre: 20,
-                novimebre:12,
-                diciembre: 52,
-            }
-        });
+        const [datos, setDatos] = useState([]);
+        const [indicador, setIndicador] = useState({});
 
 
         useEffect(() => {
@@ -35,7 +22,10 @@ const Graficas = () => {
 
 
         const cargarDatos = () => {
-
+            consutarReportePorAnyo(anio).then(res => {
+                console.log(res);
+                setIndicador(res);
+            })
         }
 
 
@@ -54,12 +44,15 @@ const Graficas = () => {
             </div>
             <div className="container">
                 <div id="accordion">
-                    <Acordion id={'CONIN'} heading={'headingCONIN'} indicador={indicadores.condiciones_inseguras}/>
-                    <Acordion id={'ACTIN'} heading={'headingACTIN'}/>
-                    <Acordion id={'ACCID'} heading={'headingACCID'}/>
-                    <Acordion id={'TRARI'} heading={'headingTRARI'}/>
-                    <Acordion id={'USEPP'} heading={'headingUSEPP'}/>
-                    <Acordion id={'CAPAC'} heading={'headingCAPAC'}/>
+                    <Acordion id={'ACCID'} heading={`headingETC`} indicador={indicador.dpa} clave="dpa"/>
+                    <Acordion id={'ACTIN'} heading={`headingETC`} indicador={indicador.ais} clave="ais"/>
+                    <Acordion id={'CAPAC'} heading={`headingETC`} indicador={indicador.capacitacion} clave="capacitacion"/>
+                    <Acordion id={'CONIN'} heading={`headingETC`} indicador={indicador.ect} clave="ect"/>
+                    <Acordion id={'TRARI'} heading={`headingETC`} indicador={indicador.efectividad_riesgo}
+                              clave="efectividad_riesgo"/>
+                    <Acordion id={'USEPP'} heading={`headingETC`} indicador={indicador.efectividad_epp}
+                              clave="efectividad_epp"/>
+
                 </div>
             </div>
         </Template>
@@ -67,22 +60,22 @@ const Graficas = () => {
 ;
 
 
-const Acordion = ({id, heading, indicador = {}}) => {
+const Acordion = ({id, heading, indicador = [], clave = ''}) => {
     const crearData = () => {
-        return  [
-            indicador.enero,
-            indicador.febrero,
-            indicador.marzo,
-            indicador.abril,
-            indicador.mayo,
-            indicador.junio,
-            indicador.julio,
-            indicador.agosto,
-            indicador.septiembre,
-            indicador.octubre,
-            indicador.novimebre,
-            indicador.diciembre,
-        ]
+       return [
+           indicador[1] != null && indicador[1][clave] !== null ? indicador[1][clave] : 0,
+           indicador[2] != null && indicador[2][clave] !== null ? indicador[2][clave] : 0,
+           indicador[3] != null && indicador[3][clave] !== null ? indicador[3][clave] : 0,
+           indicador[4] != null && indicador[4][clave] !== null ? indicador[4][clave] : 0,
+           indicador[5] != null && indicador[5][clave] !== null ? indicador[5][clave] : 0,
+           indicador[6] != null && indicador[6][clave] !== null ? indicador[6][clave] : 0,
+           indicador[7] != null && indicador[7][clave] !== null ? indicador[7][clave] : 0,
+           indicador[8] != null && indicador[8][clave] !== null ? indicador[8][clave] : 0,
+           indicador[9] != null && indicador[9][clave] !== null ? indicador[9][clave] : 0,
+           indicador[10] != null && indicador[10][clave] !== null ? indicador[10][clave] : 0,
+           indicador[11] != null && indicador[11][clave] !== null ? indicador[11][clave] : 0,
+           indicador[12] != null && indicador[12][clave] !== null ? indicador[12][clave] : 0,
+       ]
     }
     return <div className="card">
         <div className="card-header" id={heading}>
@@ -98,59 +91,19 @@ const Acordion = ({id, heading, indicador = {}}) => {
              data-parent="#accordion">
             <div className="card-body">
                 <div className="d-flex justify-content-between">
-                   <div>
-                       <div className="card border-primary p-2">
-                           <div className="d-flex justify-content-between">
-                               <div><strong>{trans('indicador.enero')}</strong></div>
-                               <div>{indicador.enero}</div>
-                           </div>
-                           <div className="d-flex justify-content-between">
-                               <div><strong>{trans('indicador.febrero')}</strong></div>
-                               <div>{indicador.febrero}</div>
-                           </div>
-                           <div className="d-flex justify-content-between">
-                               <div><strong>{trans('indicador.marzo')}</strong></div>
-                               <div>{indicador.marzo}</div>
-                           </div>
-                           <div className="d-flex justify-content-between">
-                               <div><strong>{trans('indicador.abril')}</strong></div>
-                               <div>{indicador.abril}</div>
-                           </div>
-                           <div className="d-flex justify-content-between">
-                               <div><strong>{trans('indicador.mayo')}</strong></div>
-                               <div>{indicador.mayo}</div>
-                           </div>
-                           <div className="d-flex justify-content-between">
-                               <div><strong>{trans('indicador.junio')}</strong></div>
-                               <div>{indicador.junio}</div>
-                           </div>
-                           <div className="d-flex justify-content-between">
-                               <div><strong>{trans('indicador.julio')}</strong></div>
-                               <div>{indicador.julio}</div>
-                           </div>
-                           <div className="d-flex justify-content-between">
-                               <div><strong>{trans('indicador.agosto')}</strong></div>
-                               <div>{indicador.agosto}</div>
-                           </div>
-                           <div className="d-flex justify-content-between">
-                               <div><strong>{trans('indicador.septiembre')}</strong></div>
-                               <div>{indicador.septiembre}</div>
-                           </div>
-                           <div className="d-flex justify-content-between">
-                               <div><strong>{trans('indicador.octubre')}</strong></div>
-                               <div>{indicador.octubre}</div>
-                           </div>
+                    <div className="w-25">
+                        <div className="card border-primary p-2 ">
+                            {
+                                ( [1,2,3,4,5,6,7,8,9,10,11,12]).map(mes =>
+                                    <div className="d-flex justify-content-between w-100">
+                                        <div><strong>{trans(`indicador.${mes}`)}</strong></div>
+                                        <div> {indicador[mes] != null && indicador[mes][clave] != null ? indicador[mes][clave] :''}</div>
+                                    </div>
+                                )
+                            }
 
-                           <div className="d-flex justify-content-between">
-                               <div><strong>{trans('indicador.novimebre')}</strong></div>
-                               <div>{indicador.novimebre}</div>
-                           </div>
-                           <div className="d-flex justify-content-between">
-                               <div><strong>{trans('indicador.diciembre')}</strong></div>
-                               <div>{indicador.diciembre}</div>
-                           </div>
-                       </div>
-                   </div>
+                        </div>
+                    </div>
                     <div>
                         <HighchartsReact highcharts={Highcharts} options={{
                             chart: {
@@ -159,7 +112,7 @@ const Acordion = ({id, heading, indicador = {}}) => {
                             title: {
                                 text: `${trans('indicador.comportamiento')} -${trans(`indicador.${id}`)}`
                             },
-                            subtitle:{
+                            subtitle: {
                                 text: `${process.env.REACT_APP_EMPRESA} - ${process.env.REACT_APP_LOCATION} `
                             },
                             xAxis: {
@@ -177,7 +130,7 @@ const Acordion = ({id, heading, indicador = {}}) => {
                             series: [
                                 {
                                     name: `${trans(`indicador.${id}`)}`,
-                                    data:crearData()
+                                    data: crearData()
                                 }
                             ]
                         }}/>

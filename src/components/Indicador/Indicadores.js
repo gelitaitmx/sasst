@@ -21,16 +21,17 @@ const Indicadores = () => {
     useEffect(() => cargarCatalogos(), []);
 
     const consultaIndicadores = () => consultar(monthYear).then(res => {
+        console.log(res);
         let fecha = moment(monthYear).format('MM/YYYY');
         setParametrosIndicadores(produce(draft => {
             draft.map(par => {
                 par.parametro_indicador_id = par.id;
                 par.mes = fecha.split('/')[0];
                 par.anyo = fecha.split('/')[1];
-                let ind = res.filter(ind => {
+                let ind = res.length >  0 ? (res || []).filter(ind => {
                     if (ind.parametro_indicador_id == par.id)
                         return ind
-                })[0];
+                })[0] : null;
                 par.valor = ind != null ? ind.valor : null;
                 par.id = null;
             })

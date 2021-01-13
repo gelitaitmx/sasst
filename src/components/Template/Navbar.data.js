@@ -52,6 +52,7 @@ export const ITEMS_IZQUIERDA = {
                 {keyLang: 'navbar.control', to: "/admin/control", 'icono': FaList, visible: true},
                 {keyLang: 'navbar.acciones', to: "/admin/acciones/ADMIN", 'icono': FaAutoprefixer, visible: true},
                 {keyLang: 'navbar.trabajadores', to: "/trabajadores", 'icono': FaUser, visible: true},
+                {keyLang: 'navbar.bitacora', to: "/admin/bitacora", 'icono': FaUser, visible: true},
             ]
         },
         {

@@ -3,6 +3,7 @@ import {BrowserRouter} from 'react-router-dom';
 import Ara from "./components/Aras/Ara";
 import Aras from "./components/Aras/Aras";
 import Control from "./components/Admin/Control";
+import Bitacora from "./components/Bitacora/Bitacora";
 import EnConstruccion from "./components/Template/EnConstruccion";
 import Home from './components/Home/Home';
 import Listado from './components/Hallazgos/Listado'
@@ -18,6 +19,7 @@ import Trabajadores from "./components/Trabajadores/Trabajadores";
 
 const ROUTES = [
     {exact: true, path: '/admin/control', component: Control},
+    {exact: true, path: '/admin/bitacora', component: Bitacora},
     {exact: true, path: '/acciones/listado', component: ListadoAcciones},
     {exact: true, path: '/admin/acciones/:opcion', component: ListadoAcciones},
     {exact: true, path: '/aras', component: Aras},
