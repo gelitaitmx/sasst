@@ -51,7 +51,7 @@ const Trabajadores = () => {
     return (<Template>
         <div className='d-flex flex-column'>
             <div className="container"><Titulo titulo={trans('navbar.trabajadores')}/></div>
-            <table className='table table-bordered'>
+            <table className='table table-bordered table-condensed'>
                 <thead className='thead-dark'>
                 <tr>
                     <th>{trans('trabajador.noEmpleado')}</th>
