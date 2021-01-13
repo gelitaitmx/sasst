@@ -54,6 +54,7 @@ export const navbar = {
     simulacros: 'Simulacros',
     sinUsuarioAsignado: 'Su usuario no ha sido asignado a ningún trabajador. Contacte al área de sistemas',
     secciones: 'Secciones Permisos',
+    trabajadores: 'Trabajadores',
     ultimos5Hallazgos: 'Ultimos 5 hallazgos',
     username: 'Username',
     videoSemana: 'El video de la semana',

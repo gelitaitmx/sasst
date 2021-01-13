@@ -7,7 +7,7 @@ import {
     FaFileAlt,
     FaHammer,
     FaFire,
-    FaPlus,
+    FaUser,
     FaPlusCircle, FaInfo, FaChartLine, FaGopuram
 } from "react-icons/all";
 import {can} from "../../services/seguridad.service";
@@ -51,6 +51,7 @@ export const ITEMS_IZQUIERDA = {
             navlinks: [
                 {keyLang: 'navbar.control', to: "/admin/control", 'icono': FaList, visible: true},
                 {keyLang: 'navbar.acciones', to: "/admin/acciones/ADMIN", 'icono': FaAutoprefixer, visible: true},
+                {keyLang: 'navbar.trabajadores', to: "/trabajadores", 'icono': FaUser, visible: true},
             ]
         },
         {
