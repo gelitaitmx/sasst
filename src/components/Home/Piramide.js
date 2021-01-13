@@ -19,7 +19,7 @@ const Piramide = ({fecha}) => {
     //|------API------|//
     const consultarPiramide = () => getPiramide(fecha_m.format('YYYY-MM-DD')).then(res => setPiramide(res)).catch(noop);
 
-    return (<div className='col-4 pt-0'>
+    return (<div className='col-xs-12 col-sm-4 pt-0'>
         <div className='card border-success mx-3 text-small'>
             <div className='card-header bg-success text-white'>{trans('navbar.piramideSeguridad')}</div>
             <div className='card-body py-0'>

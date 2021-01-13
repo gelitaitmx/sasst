@@ -16,7 +16,7 @@ const MasHallazgos = () => {
     //|------API------|//
     const consultarTrabajadores = () => getTrabajadoresMasHallazgos().then(res => setRels(res)).catch(noop);
 
-    return (<div className='col-4'>
+    return (<div className='col-xs-12 col-sm-4'>
         <div className='card border-danger mx-3'>
             <div className='card-header bg-danger text-white'>{trans('navbar.trabajadoresMasHallazgos')}</div>
             <div className='card-body d-flex flex-column'>

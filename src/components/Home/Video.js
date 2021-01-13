@@ -16,7 +16,7 @@ const Video = () => {
     //|------API------|//
     const cargarVideo = () => getVideo().then(res => setVideo(res)).catch(noop);
 
-    return (<div className='col-4'>
+    return (<div className='col-xs-12 col-sm-4'>
         <div className='card border-info mx-3'>
             <div className='card-header bg-info text-white'>{trans('navbar.ultimos5Hallazgos')}</div>
             <div className='card-body d-flex flex-column'>

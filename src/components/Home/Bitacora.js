@@ -16,7 +16,7 @@ const Bitacora = () => {
     //|------API------|//
     const cargarRegistros = () => getDisponibles().then(res => setRegistros(res)).catch(noop);
 
-    return (<div className='col-4'>
+    return (<div className='col-xs-12 col-sm-4'>
         <div className='card border-info mx-3'>
             <div className='card-header bg-info text-white'>{trans('navbar.bitacora')}</div>
             <div className='card-body d-flex flex-column'>
