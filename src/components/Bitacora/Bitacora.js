@@ -7,6 +7,7 @@ import DatePicker from "react-datepicker";
 import moment from "moment";
 import {FaSave, FaTrash} from "react-icons/all";
 import {consultarBitacora, guardarBitacora} from "../../api/bitacoraApi";
+import {can} from "../../services/seguridad.service";
 
 const Bitacora = () => {
     const [control, setControl] = useGlobal('control');
@@ -88,8 +89,12 @@ const Bitacora = () => {
                                       value={bita.descripcion}
                                       typeof="text"/>
                             <div className="d-flex justify-content-end w-100">
-                                <button className="btn btn-outline-success mt-1" onClick={e => guardaBitacora()}>
-                                    <FaSave/> {trans('general.guardar')}</button>
+                                {
+                                    can("admin.guardar_bitacora") &&
+                                    <button className="btn btn-outline-success mt-1" onClick={e => guardaBitacora()}>
+                                        <FaSave/> {trans('general.guardar')}</button>
+                                }
+
                             </div>
                         </div>
 

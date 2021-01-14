@@ -13,6 +13,7 @@ import $ from "jquery";
 import ModalEdit from "./ModalEdit";
 import ModalResponsableHallazgo from "./ModalResponsableHallazgo";
 import {confirmar, staticInfo} from "../../helpers/swalHelper";
+import {can} from "../../services/seguridad.service";
 
 const Control = () => {
     const [control, setControl] = useGlobal("control");
@@ -248,12 +249,12 @@ const Control = () => {
 
             </div>
             {
-                hallazgo_select.id &&
+                (hallazgo_select.id && can('hallazgos.editar_hallazgo')) &&
                 <ModalEdit hallazgo={hallazgo_select} cats={cats} trabajadores_activos={trabajadores_activos}
                            guardar={guardar}/>
             }
             {
-                hallazgo_select.id && <ModalResponsableHallazgo validarHallazgo={validarHallazgo}
+                (hallazgo_select.id && can('hallazgos.validar_hallazgo')) && <ModalResponsableHallazgo validarHallazgo={validarHallazgo}
                                                                 trabajadores_activos={trabajadores_activos}/>
             }
 

@@ -10,7 +10,7 @@ import {
     FaUser,
     FaPlusCircle, FaInfo, FaChartLine, FaGopuram
 } from "react-icons/all";
-import {can} from "../../services/seguridad.service";
+import {can, permisosCargados} from "../../services/seguridad.service";
 
 /**
  * Estructura de Menu
@@ -27,26 +27,26 @@ export const ITEMS_IZQUIERDA = {
         {
             keyLang: 'navbar.registrar',
             icono: FaPlusCircle,
-            visible: true,
+            permiso: 'navbar.registrar_hallazgo',
             tipo: 'navlink',
             nlOptions: {to: '/hallazgo/registro'}
         },  {
             keyLang: 'navbar.hallazgo',
             icono: FaList,
-            visible: true,
+            permiso: 'navbar.ver_hallazgos',
             tipo: 'navlink',
             nlOptions: {to: '/hallazgo/Listado'}
         }, {
             keyLang: 'navbar.acciones',
             icono: FaAutoprefixer,
-            visible: true,
+            permiso:'navbar.ver_acciones',
             tipo: 'navlink',
             nlOptions: {to: '/acciones/Listado'}
         },
         {
             keyLang: 'navbar.admin',
             icono: FaWrench,
-            visible: true,
+            permiso: 'navbar.ver_admin',
             tipo: 'dropdown',
             navlinks: [
                 {keyLang: 'navbar.control', to: "/admin/control", 'icono': FaList, visible: true},
@@ -58,7 +58,7 @@ export const ITEMS_IZQUIERDA = {
         {
             keyLang: 'navbar.analisisRiesgo',
             icono: FaGripVertical,
-            visible: true,
+            permiso: 'navbar.ver_analisis',
             tipo: 'dropdown',
             navlinks: [
                 {keyLang: 'navbar.documentos', to: "/documentos", 'icono': FaFileAlt, visible: true},
@@ -73,7 +73,7 @@ export const ITEMS_DERECHA = {
         {
             keyLang: 'navbar.reportes',
             icono: FaList,
-            visible: true,
+            permiso: 'navbar.ver_reportes',
             tipo: 'dropdown',
             navlinks: [
                 {keyLang: 'navbar.piramide', to: "/indicadores/piramide", 'icono': FaGopuram},

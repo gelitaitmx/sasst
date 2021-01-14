@@ -10,10 +10,11 @@ export const cargarPermisos = () => {
     const username_id = getUId();
     return API.post('getAllPermisos', {usernameId: username_id}).then((res) => {
         let permisos = res.data.map(permiso => `${permiso.seccion.nombre}.${permiso.nombre}`);
+        console.log(permisos);
         setGlobal({...getGlobal(), control: {...getGlobal().control, permisos}});
     });
 };
 
-export const permisosCargados = () => getGlobal().control.permisos != null;
+export const permisosCargados = () => getGlobal().control != null && getGlobal().control.permisos != null;
 
 export const can = (permiso) => (getGlobal().control.permisos || []).indexOf(permiso) >= 0;

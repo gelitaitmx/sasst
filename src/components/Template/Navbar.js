@@ -1,5 +1,5 @@
-import React from 'react';
-import {useGlobal} from 'reactn';
+import React, {useEffect} from 'react';
+import {useGlobal, getGlobal} from 'reactn';
 import {useState} from 'react';
 import {NavLink} from 'react-router-dom';
 import {FaHome} from "react-icons/fa";
@@ -9,11 +9,13 @@ import {isLogged, getN, getTId, cerrarSesion} from "../../helpers/authHelper";
 import {trans} from '../../services/lang.service'
 import $ from 'jquery';
 import {ITEMS_IZQUIERDA, ITEMS_DERECHA} from "./Navbar.data";
+import {can} from "../../services/seguridad.service";
 
 
 function Navbar({lang, lang_ok, permisos_ok, setPermisosOk}) {
     //|------Hooks------|//
     const [control, setControl] = useGlobal('control');
+
     return (
         <nav className="navbar navbar-expand-lg navbar-dark danger-color-dark darken-3 py-0 text-small">
             <NavLink to="/" className="nav-link navbar-brand" href="#">
@@ -47,9 +49,9 @@ const Derecha = () => {
 }
 
 const Menu = ({menu}) => <React.Fragment>
-    {menu.tipo == 'navlink' && menu.visible && <NavLinkMenu menu={menu}/>}
-    {menu.tipo == 'simple' && menu.visible && <SimpleMenu menu={menu}/>}
-    {menu.tipo == 'dropdown' && menu.visible && <DropdownMenu menu={menu}/>}
+    {menu.tipo == 'navlink' && can(menu.permiso) && <NavLinkMenu menu={menu}/>}
+    {menu.tipo == 'simple' && can(menu.permiso) && <SimpleMenu menu={menu}/>}
+    {menu.tipo == 'dropdown' && can(menu.permiso) && <DropdownMenu menu={menu}/>}
 </React.Fragment>
 
 

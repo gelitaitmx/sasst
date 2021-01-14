@@ -6,6 +6,7 @@ import {hallazgo} from "../../lang/es";
 import produce from "immer";
 import {FaSave} from "react-icons/all";
 import {guardarAccion} from "../../api/hallazgoApi";
+import {can} from "../../services/seguridad.service";
 
 const Acciones = ({acciones, guardarAccionCorrectiva , edicion = false}) => {
     return <div>
@@ -65,11 +66,15 @@ const AgregarAccion = ({guardarAccionCorrectiva}) => {
                       onChange={(e) => actualizaAccion('descripcion', e.target.value)}/>
         </div>
         <div className="pt-3">
-            <button className="btn w-100 btn-success"
-                    onClick={e=>guardarAccionCorrectiva(accion)}
-                    disabled={!accion.fecha_verificacion && !accion.descripcion}>
-                <FaSave/>{trans('general.guardar')}
-            </button>
+            {
+                can("acciones.validar_accion") &&
+                <button className="btn w-100 btn-success"
+                        onClick={e=>guardarAccionCorrectiva(accion)}
+                        disabled={!accion.fecha_verificacion && !accion.descripcion}>
+                    <FaSave/>{trans('general.guardar')}
+                </button>
+            }
+
         </div>
     </div>
 };

@@ -35,7 +35,7 @@ const Detalle = ({hallazgo, actualizaEditable, onClick}) => {
                     <div className="pr-2"><strong>{trans("hallazgo.fecha")} : </strong></div>
                     <div>{moment(hallazgo.fecha).format('DD/MM/yyyy HH:mm')}</div>
                 </div>
-                {can('hallazgo.editar_reporto') &&
+                {can("hallazgos.editar_hallazgo") &&
                 <button className="btn btn-sm btn-outline-success" onClick={e => actualizaEditable(CLAVEINICIO)}>
                     <FaEdit/></button>
                 }
@@ -155,7 +155,7 @@ const Detalle = ({hallazgo, actualizaEditable, onClick}) => {
             </div>
             <div>
 
-                {   can('hallazgo.guardar_hallazgo') &&
+                {   can('hallazgos.guardar_hallazgo') &&
                 <button className="btn btn-outline-success w-100" onClick={e => onClick(hallazgo)}>
                     <FaSave/> {trans('general.guardar')}
                 </button>

@@ -5,6 +5,7 @@ import DatePicker from "react-datepicker";
 import {FaSave, FaTrash} from "react-icons/all";
 import FilesDropzone from "../Template/FilesDropzone";
 import {noop} from "../../helpers/generalHelper";
+import {can} from "../../services/seguridad.service";
 
 const Agregar = ( {documento = {} , actualizarDocumento = noop , tipos_documento = [], guardarDocumento= noop} ) =>{
     return  <div className="p-2">
@@ -42,12 +43,16 @@ const Agregar = ( {documento = {} , actualizarDocumento = noop , tipos_documento
 
             </div>
             <div>
-                <button className="btn btn-outline-success w-100"
-                        onClick={(e) => guardarDocumento()}
-                        disabled={!documento.fecha ||  !documento.tipo_documento || !documento.adjunto || !documento.adjunto.name}>
-                    <FaSave/>
-                    {trans('general.guardar')}
-                </button>
+                {
+                    can("analisis.guardar_adjunto") &&
+                    <button className="btn btn-outline-success w-100"
+                            onClick={(e) => guardarDocumento()}
+                            disabled={!documento.fecha ||  !documento.tipo_documento || !documento.adjunto || !documento.adjunto.name}>
+                        <FaSave/>
+                        {trans('general.guardar')}
+                    </button>
+                }
+
             </div>
         </div>
     </div>
