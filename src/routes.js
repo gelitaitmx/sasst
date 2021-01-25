@@ -15,6 +15,8 @@ import Reporte from './components/Indicador/Reporte'
 import Graficas from './components/Indicador/Graficas'
 import PiramideResultados from './components/Indicador/PiramideResultados'
 import Trabajadores from "./components/Trabajadores/Trabajadores";
+import AtendidoPorMes from "./components/AtendidoPorMes/AtendidoPorMes";
+import VideoRegistro from "./components/Video/VideoRegistro";
 
 
 const ROUTES = [
@@ -33,6 +35,8 @@ const ROUTES = [
     {exact: true, path: '/indicadores/graficas', component: Graficas},
     {exact: true, path: '/indicadores/reporte', component: Reporte},
     {exact: true, path: '/indicadores/piramide', component: PiramideResultados},
+    {exact: true, path: '/indicadores/atendidosPorMes', component: AtendidoPorMes},
+    {exact: true, path: '/indicadores/video', component: VideoRegistro},
     {exact: true, path: '/trabajadores', component: Trabajadores},
     {exact: true, path: '/404', component: NotFound},
     {exact: true, path: '/', component: Home},

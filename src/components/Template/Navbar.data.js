@@ -80,6 +80,7 @@ export const ITEMS_DERECHA = {
                 {keyLang: 'navbar.indicadoresAdmin', to: "/indicadores/listado", 'icono': FaInfo},
                 {keyLang: 'navbar.indicadoresReporte', to: "/indicadores/reporte", 'icono': FaFileAlt},
                 {keyLang: 'navbar.indicadoresGraficas', to: "/indicadores/graficas", 'icono': FaChartLine},
+                {keyLang: 'navbar.video', to: "/indicadores/video", 'icono': FaChartLine},
             ]
         }
     //     {

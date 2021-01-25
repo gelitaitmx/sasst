@@ -45,4 +45,9 @@ export const guardarIndicadores = (indicadores, mostrar_cargando = true, mostrar
     return API.post('indicador/guardar', {indicadores}).then(res => mostrar_correcto ? returnCargadoCorrecto(res.data) : res.data).catch((err) => mostrar_error ? mostrarErrorCargar(err) : err);
 };
 
+export const consultarAtendidosPorDepto = ( mostrar_cargando = true, mostrar_correcto = true, mostrar_error = true) => {
+    if (mostrar_cargando)
+        cargando();
+    return API.post('reportes/getAtendidosPorDepto', {}).then(res => mostrar_correcto ? returnCargadoCorrecto(res.data) : res.data).catch((err) => mostrar_error ? mostrarErrorCargar(err) : err);
+};
 
